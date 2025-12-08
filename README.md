@@ -4,8 +4,12 @@ Un nuevo tipo de textView que tiene funciones de span ya listas en java
 ## ¿como usarlo?
 en settings de gradle
 ```gradle
-dependencies {
-		implementation 'com.github.User:Repo:Tag'
+dependencyResolutionManagement {
+		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		repositories {
+			mavenCentral()
+			maven { url 'https://jitpack.io' }
+		}
 	}
 ```
 y en las dependencias
