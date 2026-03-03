@@ -33,7 +33,7 @@ codeView.setText(
 );
 ```
 ### CodeView Preview
-<img width="1080" height="295" alt="1000254013" src="https://github.com/user-attachments/assets/7859dbe0-1c23-4047-ad8f-ba4eb1cc5100" />
+<img width="1080" height="526" alt="1000254015" src="https://github.com/user-attachments/assets/b4b02320-1263-4b44-8311-b21fafc6b457" />
 
 
 - Vertical and horizontal scroll: allows viewing long code without problems.
