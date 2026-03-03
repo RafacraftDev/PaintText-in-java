@@ -38,15 +38,16 @@ public class CodeView extends LinearLayout {
     // Colores
     private static final int KEYWORD_COLOR = 0xFFFF7B72; // Salmon
     private static final int NUMBER_COLOR = 0xFF79C0FF; // Azul para números
-    private static final int STRING_COLOR = 0xFF81C995; // Verde para strings
+    private static final int STRING_COLOR = 0xFF79C0FF; // Azul al estilo GitHub
     private static final int COMMENT_COLOR = 0xFF9198A1; // Gris para comentarios
     private static final int METHOD_COLOR = 0xFFD2A8FF; // Lila para métodos
 
     public CodeView(Context ctx) {
         super(ctx);
         setOrientation(HORIZONTAL);
-        setBackgroundColor(0xFF151B23); // fondo oscuro
+        setBackgroundColor(0xFF151B23); // Fondo oscuro
         setPadding(8, 8, 8, 8);
+        setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 
         paintText = new PaintText(ctx);
 
@@ -58,7 +59,7 @@ public class CodeView extends LinearLayout {
         // Resaltar métodos después de un punto
         paintText.putRegex("(?<=\\.)\\b\\w+\\b(?=\\s*\\()", METHOD_COLOR);
 
-        // Números
+        // Números (enteros y decimales)
         paintText.putRegex("[0-9]+(\\.[0-9]+)?", NUMBER_COLOR);
         paintText.putRegex("0x[0-9A-Fa-f]+", NUMBER_COLOR);
 
@@ -68,9 +69,9 @@ public class CodeView extends LinearLayout {
         // Comentarios
         paintText.putRegex("//.*", COMMENT_COLOR);
 
-        // ScrollView vertical con altura máxima
+        // Scroll vertical con altura máxima
         ScrollView scrollVertical = new ScrollView(ctx) {
-            int maxHeightDp = 200; // altura máxima en dp
+            int maxHeightDp = 200; // Altura máxima en dp
             float scale = ctx.getResources().getDisplayMetrics().density;
             int maxHeightPx = (int) (maxHeightDp * scale + 0.5f);
 
@@ -90,11 +91,11 @@ public class CodeView extends LinearLayout {
         scrollHorizontal.addView(paintText);
         scrollVertical.addView(scrollHorizontal);
 
-        // Layout para el Copy Button
+        // Layout para el botón de copy
         LinearLayout ln = new LinearLayout(ctx);
         ln.setOrientation(HORIZONTAL);
         ln.setGravity(Gravity.TOP | Gravity.END);
-        ln.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        ln.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 
         int dp = 35;
         float scale = ctx.getResources().getDisplayMetrics().density;
@@ -103,18 +104,23 @@ public class CodeView extends LinearLayout {
         ImageView img = new ImageView(ctx);
         img.setLayoutParams(new LayoutParams(px, px));
         img.setImageResource(R.drawable.ic_copy);
-		
-		img.setOnClickListener(v -> {
-			ClipboardManager cm = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
-			ClipData clip = ClipData.newPlainText("CodeView Text", paintText.getText().toString());
-			cm.setPrimaryClip(clip);
-		});
+
+        img.setOnClickListener(v -> {
+            ClipboardManager cm = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("CodeView Text", paintText.getText().toString());
+            cm.setPrimaryClip(clip);
+        });
 
         ln.addView(img);
 
-        // Añadir todo al CodeView
-        addView(scrollVertical, new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
-        addView(ln);
+        // Contenedor horizontal principal: scroll vertical + botón copy
+        LinearLayout container = new LinearLayout(ctx);
+        container.setOrientation(HORIZONTAL);
+        container.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        container.addView(scrollVertical, new LayoutParams(0, LayoutParams.WRAP_CONTENT, 1f));
+        container.addView(ln);
+
+        addView(container);
     }
 
     /**
