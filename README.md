@@ -63,3 +63,6 @@ paintText.setText("Hello World 123!");
 
 paintText.draw();
 ```
+
+### Example of how it would look
+<img width="1080" height="292" alt="1000254006" src="https://github.com/user-attachments/assets/7405ab63-dd2c-4d99-b51d-da160670924e" />
