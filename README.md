@@ -1,68 +1,64 @@
-# 🚀 PaintText:
-![GitHub stars](https://img.shields.io/github/stars/RafacraftDev/PaintText-in-java)
-![License: MIT](https://img.shields.io/github/license/RafacraftDev/PaintText-in-java)
+# 🖌️ Ralfx Views
+Ralfx Views is a custom Android view library designed to create **TextViews and CodeViews with syntax highlighting** easily and elegantly. Perfect for displaying code GitHub-style, with horizontal and vertical scrolling, customizable colors, and copy button support.
 
-`PaintText` is an advanced type of TextView that allows you to color words, phrases, or patterns using literal words or regular expressions (regex). It also allows you to assign text color and background color. 
-
----
-
-## 🛠️ How to use
-PaintText is very easy, just place this import:
+# 📦 Contents
+- **PaintText** – Advanced TextView that allows coloring words or patterns using regex.
+- **CodeView** – Code editor-like component that uses PaintText to highlight keywords, numbers, strings, and comments, with double scroll and copy button.
+# 🛠️ How to Use
+1. import
 ```java
 import ralfx.view.PaintText;
+import ralfx.view.CodeView;
 ```
-Create the PaintText:
-```java
-PaintText paintText = new PaintText(ctx);
-```
-## 1️⃣ Color in literal words
-```java
-// Text color only
-paintText.put("Hello", 0xFFFFFFFF); // White text
-
-// Text and backgrounds 
-paintText.put("world", 0xFFFFFFFF, 0xFFFF0000); // White text, red background
-```
-> ⚠️ Note: The colors use ARGB format. 0xFFFFFFFF = white, 0xFFFF0000 = red.
-
-## 2️⃣ Coloring using regular expressions
-```java
-// Text color only
-paintText.putRegex("class .*", 0xFFFFFFFF); // Colors any word that begins with "class"
-
-// Text and background color
-paintText.putRegex("\\d+", 0xFF00FF00, 0xFF000000);
-```
-> 💡 Regex soporta cualquier patrón válido de Java (Pattern.compile).
-# 3️⃣ Draw the colors
-After adding your words or regex:
-```java
-paintText.setText("Hello world 123 class Test");
-paintText.draw(); // Apply the colors
-```
-# 4️⃣ Useful methods
-
-| Method | Description |
-|--------|-------------|
-| `put(String word, int color)` | Colors a literal word with the given text color. |
-| `put(String word, int color, int background)` | Colors a literal word with text color **and** background color. |
-| `putRegex(String regex, int color)` | Colors patterns using regex with the given text color. |
-| `putRegex(String regex, int color, int background)` | Colors patterns using regex with text **and** background color. |
-| `getKeyAt(int index)` | Returns the literal word at the specified `index` (useful for iterating through keys). |
-| `draw()` | Applies all the text and background colors to the current text in the TextView. |
-## 5️⃣ Complete example
-
+2. Create PaintText
 ```java
 PaintText paintText = new PaintText(ctx);
 
-paintText.put("Hello", 0xFFFFFFFF, 0xFF0000FF); // White on blue
-paintText.put("World", 0xFFFFFF00, 0xFFFF0000); // Yellow on red
+// Custom colors: text and optional background
+paintText.put("Hello", 0xFFFFFFFF, 0xFF0000FF); // White text on blue background
 paintText.putRegex("\\d+", 0xFF00FF00); // Green numbers
 
 paintText.setText("Hello World 123!");
-
 paintText.draw();
 ```
+3. Create CodeView
+```java
+CodeView codeView = new CodeView(ctx);
+codeView.setText(
+    "public class Main {\n" +
+    "    public static void main(String[] args) {\n" +
+    "        System.out.println(\"Hello GitHub!\");\n" +
+    "    }\n" +
+    "}"
+);
+```
+- Vertical and horizontal scroll: allows viewing long code without problems.
+- Copy button: quickly copy code lines.
+- GitHub-style highlighting: keywords, numbers, strings (blue), comments, and methods.
+# 🎨 Default Colors (GitHub style)
+| Type                  | Hex Color   |
+|-----------------------|------------|
+| Keywords              | #FF7B72    |
+| Numbers               | #79C0FF    |
+| Strings               | #56B6C2    |
+| Comments              | #9198A1    |
+| Parentheses / Methods | #D2A8FF    |
+# ⚙️ Requirements
+- Android Studio 4.0+(PC) or codeAssist(Android)
+- Kotlin or Java compatible with AndroidX
+- API 21+
+# 📁 Structure
+```
+ralfx/view/
+│
+├─ PaintText.java       # TextView with syntax highlighting
+├─ CodeView.java        # GitHub-style code view
+└─ README.md
+```
+# 💡 Tips
+- You can add more keywords or patterns using paintText.putRegex() to customize the highlighting.
+- Adjust colors using ARGB hex codes.
+- CodeView uses double scroll and auto height depending on text; the copy button stays fixed.
 
-### Example of how it would look
-<img width="1080" height="292" alt="1000254006" src="https://github.com/user-attachments/assets/7405ab63-dd2c-4d99-b51d-da160670924e" />
+# 📜 License
+MIT License – you can use, modify, and distribute the code freely.
